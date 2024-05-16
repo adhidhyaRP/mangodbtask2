@@ -1,0 +1,28 @@
+1.db.topics_and_tasks.find({"tasks.0.date": {$gt: "2023-10-01", $lt: "2023-10-31"}})
+2.db.company_drives.find({date:{$gte:"2020-10-01",$lte : "2020-10-31"}})
+3.db.placement.aggregate({$match : {status:"Appeared"}})
+4.db.codekata.find({},{username:1,solvedcodingproblems:1})
+5.db.mentor.find({numberofmentees : {$gt : 15}})
+6.db.attendance.aggregate([
+{ 
+    $match: { 
+      "attendance.date": { 
+        $gte: "2020-10-15", 
+        $lte: "2020-10-31" 
+      }, 
+      "attendance.status": "Absent", 
+      "attendance.tasksubmitted": false 
+    } 
+  },
+  { 
+    $group: { 
+      _id: "$userid", 
+      count: { 
+        $sum: 1 
+      } 
+    } 
+  },
+  { 
+    $count: "totalUsers" 
+  }
+])
